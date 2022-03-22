@@ -202,8 +202,9 @@ class Empresa(models.Model):
     representante = models.CharField(max_length=50)
     empresa = models.CharField(max_length=50)
     ruc_empresa = models.CharField(max_length=50, default='0')
-    Inventario_de_Empresa = models.ManyToManyField(to=Inventario)
-    potreros = models.IntegerField(null=True, blank=True)
+    Inventario_de_Empresa = models.ManyToManyField(
+        to=Inventario, null=True, blank=True)
+    potreros = models.IntegerField(blank=True)
 
     def __str__(self):
         return '{}'.format(self.empresa)

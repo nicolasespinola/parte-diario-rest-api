@@ -1,5 +1,4 @@
 from tabnanny import verbose
-from tkinter import TRUE
 from django.db import models
 
 
@@ -26,13 +25,13 @@ class Categoria(models.Model):
 
 
 class Entradas(models.Model):
-    entradas = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=50)
 
     class Meta:
         verbose_name_plural = "Entradas"
 
     def __str__(self):
-        return '{}'.format(self.entradas)
+        return '{}'.format(self.tipo)
 
 
 class Salidas(models.Model):
@@ -72,14 +71,16 @@ def __str__(self):
 
 
 class entrada(models.Model):
-    entradas = models.ManyToManyField(to=Entradas)
     cantidad = models.IntegerField(null=True, blank=True)
     cantidad_M = models.IntegerField(null=True, blank=True)
     cantidad_H = models.IntegerField(null=True, blank=True)
     categoria = models.ManyToManyField(to=Categoria)
     pesoTotal = models.IntegerField(null=True, blank=True)
     parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "entrada", verbose_name=("Entradas")
+        parteDiario, models.CASCADE, "entrada", verbose_name=("Entrada")
+    )
+    entradas = models.ForeignKey(
+        Entradas, models.CASCADE, "entradas", verbose_name=("Entradas")
     )
 
 
@@ -187,7 +188,7 @@ class Inventario(models.Model):
     pesocab = models.CharField(max_length=50)
 
     def __str__(self):
-        return '{}'.format(self.categoria)
+        return '{}'.format(self.cantidad)
 
 
 class Potrero(models.Model):

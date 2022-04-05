@@ -13,6 +13,78 @@ class parteDiario(models.Model):
         verbose_name=("Empresa"),
     )
 
+    lluvia = models.ForeignKey(
+        "partediario.lluvia",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        verbose_name=("Lluvias"),
+    )
+
+    entrada = models.ForeignKey(
+        "partediario.entrada",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        verbose_name=("Entrada"),
+    )
+
+    salida = models.ForeignKey(
+        "partediario.salida",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        verbose_name=("Salida"),
+    )
+
+    recategorizacion = models.ForeignKey(
+        "partediario.recategorizacion",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        verbose_name=("Recategorizacion"),
+    )
+
+    rotacion = models.ForeignKey(
+        "partediario.rotacion",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        verbose_name=("Rotacion"),
+    )
+
+    sanitacion = models.ForeignKey(
+        "partediario.sanitacion",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        verbose_name=("Sanitacion"),
+    )
+
+    contratistas = models.ForeignKey(
+        "partediario.contratistas",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        verbose_name=("Contratistas"),
+    )
+
+    recorrida = models.ForeignKey(
+        "partediario.recorrida",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        verbose_name=("Recorridas"),
+    )
+
+    opcionSanitacion = models.ForeignKey(
+        "partediario.opcionSanitacion",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        verbose_name=("Opcion de Sanitacion"),
+    )
+
     def __str__(self):
         return 'de {}'.format(self.empresa.empresa)
 
@@ -61,10 +133,6 @@ class lluvia(models.Model):
         "Cant. de mm's de lluvia en el Retiro:")
     evento = models.CharField("Otro evento:", max_length=50)
 
-    parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "lluvia", verbose_name=("Lluvias")
-    )
-
 
 def __str__(self):
     return '{} {} {}'.format('Lluvia de', self.mm_central, 'mms')
@@ -76,8 +144,8 @@ class entrada(models.Model):
     cantidad_H = models.IntegerField(null=True, blank=True)
     categoria = models.ManyToManyField(to=Categoria)
     pesoTotal = models.IntegerField(null=True, blank=True)
-    parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "entrada", verbose_name=("Entrada")
+    categoria = models.ForeignKey(
+        Categoria, models.CASCADE, "categorias", verbose_name=("Categorias")
     )
     entradas = models.ForeignKey(
         Entradas, models.CASCADE, "entradas", verbose_name=("Entradas")
@@ -87,9 +155,6 @@ class entrada(models.Model):
 class rotacion(models.Model):
     potrero_inicial = models.CharField(max_length=50)
     potrero_final = models.CharField(max_length=50)
-    parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "rotacion", verbose_name=("Rotacion")
-    )
 
     class Meta:
         verbose_name_plural = "Rotaciones"
@@ -98,9 +163,6 @@ class rotacion(models.Model):
 class recorrida(models.Model):
     potrero = models.CharField(max_length=50)
     observacion = models.CharField(max_length=120)
-    parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "recorrida", verbose_name=("Recorrida")
-    )
 
 
 def __str__(self):
@@ -112,9 +174,6 @@ class salida(models.Model):
     cantidad = models.IntegerField(null=True, blank=True)
     categoria_madre = models.ManyToManyField(to=Categoria)
     causa = models.CharField(max_length=50)
-    parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "salida", verbose_name=("Salidas")
-    )
 
 
 class pesaje(models.Model):
@@ -152,9 +211,6 @@ class sanitacion(models.Model):
     elemento = models.ManyToManyField(to=opcionSanitacion)
     potrero = models.IntegerField(blank=True, null=True)
     observacion = models.CharField(max_length=100, blank=True)
-    parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "sanitacion", verbose_name=("Sanitacion/Vacunacion")
-    )
 
     def __str__(self):
         return '{}'.format(self.elemento)
@@ -171,9 +227,6 @@ class recategorizacion(models.Model):
         Categoria, models.CASCADE, "final", verbose_name=("Recategorizacion Final")
     )
     cantidad = models.IntegerField(null=True, blank=True)
-    parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "recategorizacion", verbose_name=("Recategorizacion")
-    )
 
     class Meta:
         verbose_name_plural = "Recategorizaciones"
@@ -203,8 +256,8 @@ class Empresa(models.Model):
     empresa = models.CharField(max_length=50)
     ruc_empresa = models.CharField(max_length=50, default='0')
     Inventario_de_Empresa = models.ManyToManyField(
-        to=Inventario, null=True, blank=True)
-    potreros = models.IntegerField(blank=True)
+        to=Inventario, blank=True)
+    potreros = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.empresa)
@@ -229,6 +282,3 @@ class Superficie(models.Model):
 class contratistas(models.Model):
     trabajos_realizados = models.CharField(max_length=50)
     insumos = models.CharField(max_length=50)
-    parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "contratista", verbose_name=("Contratistas")
-    )

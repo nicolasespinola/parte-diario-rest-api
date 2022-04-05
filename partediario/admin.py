@@ -23,12 +23,7 @@ admin.site.register(Salidas)
 admin.site.register(Inventario)
 admin.site.register(opcionSanitacion)
 admin.site.register(opcionActividad)
-
-
-class lluviaInLine(admin.TabularInline):
-    model = lluvia
-    fields = ["mm_central", "mm_retiro", "evento"]
-    extra = 0
+admin.site.register(lluvia)
 
 
 class entradaInLine(admin.TabularInline):
@@ -88,6 +83,5 @@ class contratistaInLine(admin.TabularInline):
 
 @admin.register(parteDiario)
 class parteDiarioAdmin(admin.ModelAdmin):
-    list_display = ["id", "empresa", "fecha"]
-    inlines = [lluviaInLine, entradaInLine,
-               salidaInLine, recatInLine, recorridaInLine, rotInLine, sanitacionInLine, otroInLine, contratistaInLine]
+    list_display = ["id", "empresa", "fecha", "lluvia"]
+    inlines = [otroInLine]

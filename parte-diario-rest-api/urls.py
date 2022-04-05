@@ -12,7 +12,17 @@ router.register(r'empresas', views.EmpresaViewSet)
 router.register(r'partediarios', views.ParteDiarioViewSet)
 router.register(r'inventarios', views.InventarioViewSet)
 router.register(r'categorias', views.CategoriaViewSet)
-
+router.register(r'lluvias', views.LluviaViewSet)
+router.register(r'salidas', views.SalidaViewSet)
+router.register(r'entradas', views.EntradaViewSet)
+router.register(r'tiposalidas', views.TipoSalidaViewSet)
+router.register(r'tipoentradas', views.TipoEntradaViewSet)
+router.register(r'recategorizacion', views.RecategorizacionViewSet)
+router.register(r'recorridas', views.RecorridaViewSet)
+router.register(r'rotacion', views.RotacionViewSet)
+router.register(r'contratistas', views.ContratistasViewSet)
+router.register(r'sanitacion', views.SanitacionViewSet)
+router.register(r'opcionsanitacion', views.opcionSanitacionViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(

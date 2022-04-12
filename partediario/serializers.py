@@ -33,7 +33,21 @@ class LluviaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EntradaSerializer(serializers.ModelSerializer):
+class EntradaWriteSerializer(serializers.ModelSerializer):
+    cat_e = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = entrada
+        exclude = ("categoria",)
+
+    def create(self, validated_data):
+        cat_e = validated_data.pop("cat_e")
+        cat = Categoria.objects.get(categoria=cat_e)
+        ent = entrada.objects.create(**validated_data, categoria=cat)
+        return(ent)
+
+
+class EntradaReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = entrada
         fields = '__all__'

@@ -140,12 +140,11 @@ def __str__(self):
 
 class entrada(models.Model):
     cantidad = models.IntegerField(null=True, blank=True)
-    cantidad_M = models.IntegerField(null=True, blank=True)
-    cantidad_H = models.IntegerField(null=True, blank=True)
-    categoria = models.ManyToManyField(to=Categoria)
-    pesoTotal = models.IntegerField(null=True, blank=True)
+    cantidad_m = models.IntegerField(null=True, blank=True)
+    cantidad_h = models.IntegerField(null=True, blank=True)
+    peso_total = models.IntegerField(null=True, blank=True)
     categoria = models.ForeignKey(
-        Categoria, models.CASCADE, "categorias", verbose_name=("Categorias")
+        Categoria, models.CASCADE, related_name="categorias_entrada", verbose_name=("Categorias")
     )
     entradas = models.ForeignKey(
         Entradas, models.CASCADE, "entradas", verbose_name=("Entradas")
@@ -170,14 +169,21 @@ def __str__(self):
 
 
 class salida(models.Model):
-    salidas = models.ManyToManyField(to=Salidas)
     cantidad = models.IntegerField(null=True, blank=True)
-    categoria_madre = models.ManyToManyField(to=Categoria)
     causa = models.CharField(max_length=50)
+    categoria = models.ForeignKey(
+        Categoria, on_delete=models.CASCADE, related_name="categorias_salida", verbose_name=("Categorias")
+    )
+    salidas = models.ForeignKey(
+        Salidas, models.CASCADE, "tipo_salidas", verbose_name=("Salidas")
+    )
+    
 
 
 class pesaje(models.Model):
-    categoria = models.ManyToManyField(to=Categoria)
+    categoria = models.ForeignKey(
+        Categoria, models.CASCADE, "categorias_pesaje", verbose_name=("Categorias")
+    )
     cantidad = models.IntegerField(null=True, blank=True)
     peso_minimo = models.IntegerField(null=True, blank=True)
     peso_maximo = models.IntegerField(null=True, blank=True)
@@ -199,8 +205,12 @@ class opcionActividad(models.Model):
 
 
 class otraActividad(models.Model):
-    actividad_realizada = models.ManyToManyField(to=opcionActividad)
-    categoria = models.ManyToManyField(to=Categoria)
+    categoria = models.ForeignKey(
+        Categoria, models.CASCADE, "categorias_Otro", verbose_name=("Categorias")
+    )
+    actividad = models.ForeignKey(
+        opcionActividad, models.CASCADE, "opciones", verbose_name=("Opciones")
+    )
     cantidad = models.IntegerField(null=True, blank=True)
     parteDiario = models.ForeignKey(
         parteDiario, models.CASCADE, "Otra", verbose_name=("Otros")
@@ -208,7 +218,9 @@ class otraActividad(models.Model):
 
 
 class sanitacion(models.Model):
-    elemento = models.ManyToManyField(to=opcionSanitacion)
+    elemento = models.ForeignKey(
+        opcionSanitacion, models.CASCADE, "elemento_de_sanitacion", verbose_name=("Elementos de Sanitacion")
+    )
     potrero = models.IntegerField(blank=True, null=True)
     observacion = models.CharField(max_length=100, blank=True)
 
@@ -236,7 +248,9 @@ class recategorizacion(models.Model):
 
 
 class Inventario(models.Model):
-    categoria = models.ManyToManyField(to=Categoria)
+    categoria = models.ForeignKey(
+        Categoria, models.CASCADE, "categorias_inventario", verbose_name=("Categorias")
+    )
     cantidad = models.CharField(max_length=50)
     pesocab = models.CharField(max_length=50)
 

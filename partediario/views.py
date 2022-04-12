@@ -1,3 +1,4 @@
+from venv import create
 from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import *
@@ -32,7 +33,12 @@ class LluviaViewSet(viewsets.ModelViewSet):
 
 class EntradaViewSet(viewsets.ModelViewSet):
     queryset = entrada.objects.all()
-    serializer_class = EntradaSerializer
+    serializer_class = EntradaReadSerializer
+
+    def get_serializer_class(self):
+        if (self.action == 'create'):
+            return(EntradaWriteSerializer)
+        return(self.serializer_class)
 
 
 class SalidaViewSet(viewsets.ModelViewSet):

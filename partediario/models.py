@@ -18,6 +18,7 @@ class parteDiario(models.Model):
         models.SET_NULL,
         "partediario",
         null=True,
+        blank=True,
         verbose_name=("Lluvias"),
     )
 
@@ -26,6 +27,7 @@ class parteDiario(models.Model):
         models.SET_NULL,
         "partediario",
         null=True,
+        blank=True,
         verbose_name=("Entrada"),
     )
 
@@ -34,6 +36,7 @@ class parteDiario(models.Model):
         models.SET_NULL,
         "partediario",
         null=True,
+        blank=True,
         verbose_name=("Salida"),
     )
 
@@ -42,6 +45,7 @@ class parteDiario(models.Model):
         models.SET_NULL,
         "partediario",
         null=True,
+        blank=True,
         verbose_name=("Recategorizacion"),
     )
 
@@ -50,6 +54,7 @@ class parteDiario(models.Model):
         models.SET_NULL,
         "partediario",
         null=True,
+        blank=True,
         verbose_name=("Rotacion"),
     )
 
@@ -58,6 +63,7 @@ class parteDiario(models.Model):
         models.SET_NULL,
         "partediario",
         null=True,
+        blank=True,
         verbose_name=("Sanitacion"),
     )
 
@@ -66,6 +72,7 @@ class parteDiario(models.Model):
         models.SET_NULL,
         "partediario",
         null=True,
+        blank=True,
         verbose_name=("Contratistas"),
     )
 
@@ -74,6 +81,7 @@ class parteDiario(models.Model):
         models.SET_NULL,
         "partediario",
         null=True,
+        blank=True,
         verbose_name=("Recorridas"),
     )
 
@@ -82,6 +90,7 @@ class parteDiario(models.Model):
         models.SET_NULL,
         "partediario",
         null=True,
+        blank=True,
         verbose_name=("Opcion de Sanitacion"),
     )
 

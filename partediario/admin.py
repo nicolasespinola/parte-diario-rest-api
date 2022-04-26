@@ -71,7 +71,7 @@ class pesajeInLine(admin.TabularInline):
 
 class otroInLine(admin.TabularInline):
     model = otraActividad
-    fields = ["categoria", "cantidad", "actividad_realizada"]
+    fields = ["categoria", "cantidad", "actividad"]
     extra = 0
 
 

@@ -1,5 +1,6 @@
 from tabnanny import verbose
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class parteDiario(models.Model):
@@ -98,6 +99,22 @@ class parteDiario(models.Model):
         return 'de {}'.format(self.empresa.empresa)
 
 
+class Capataz(models.Model):
+    user = models.OneToOneField(
+        User, related_name="usuario", on_delete=models.CASCADE, verbose_name="Usuario")
+    phone = models.IntegerField(null=True, blank=True)
+    empresaCapataz = models.ForeignKey(
+        "partediario.Empresa",
+        related_name="Empresa",
+        on_delete=models.CASCADE,
+        blank=True,
+        verbose_name=("Empresa asociada")
+    )
+
+    def __str__(self):
+        return self.user.first_name
+
+
 class Categoria(models.Model):
     categoria = models.CharField(max_length=50)
 
@@ -186,7 +203,6 @@ class salida(models.Model):
     salidas = models.ForeignKey(
         Salidas, models.CASCADE, "tipo_salidas", verbose_name=("Salidas")
     )
-    
 
 
 class pesaje(models.Model):

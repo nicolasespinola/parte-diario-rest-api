@@ -35,15 +35,19 @@ class LluviaSerializer(serializers.ModelSerializer):
 
 class EntradaWriteSerializer(serializers.ModelSerializer):
     cat_e = serializers.CharField(write_only=True)
+    tip_e = serializers.CharField(write_only=True)
 
     class Meta:
         model = entrada
-        exclude = ("categoria",)
+        exclude = ("categoria", "entradas")
 
     def create(self, validated_data):
         cat_e = validated_data.pop("cat_e")
+        tip_e = validated_data.pop("tip_e")
         cat = Categoria.objects.get(categoria=cat_e)
-        ent = entrada.objects.create(**validated_data, categoria=cat)
+        tip = Entradas.objects.get(tipo=tip_e)
+        ent = entrada.objects.create(
+            **validated_data, categoria=cat, entradas=tip)
         return(ent)
 
 

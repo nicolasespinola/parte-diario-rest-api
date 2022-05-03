@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class parteDiario(models.Model):
-    fecha = models.DateField("Fecha Creada")
+    fecha = models.DateField(auto_now_add=True)
 
     empresa = models.ForeignKey(
         "partediario.Empresa",

@@ -10,6 +10,7 @@ django-cors-headers = "*"
 djangorestframework-camel-case = "*"
 drf-yasg = {extras = ["validation"], version = "*"}
 mysqlclient = "*"
+gunicorn = "*"
 
 [dev-packages]
 autopep8 = "*"

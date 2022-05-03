@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from django.contrib.auth.admin import UserAdmin
 
 
 @admin.register(Empresa)
@@ -85,3 +86,10 @@ class contratistaInLine(admin.TabularInline):
 class parteDiarioAdmin(admin.ModelAdmin):
     list_display = ["id", "empresa", "fecha", "lluvia"]
     inlines = [otroInLine]
+
+
+class CapatazInline(admin.StackedInline):
+    model = Capataz
+
+
+UserAdmin.inlines = [CapatazInline]

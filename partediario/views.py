@@ -31,6 +31,11 @@ class LluviaViewSet(viewsets.ModelViewSet):
     serializer_class = LluviaSerializer
 
 
+class CapatazViewSet(viewsets.ModelViewSet):
+    queryset = Capataz.objects.all()
+    serializer_class = CapatazSerializer
+
+
 class EntradaViewSet(viewsets.ModelViewSet):
     queryset = entrada.objects.all()
     serializer_class = EntradaReadSerializer

@@ -22,6 +22,7 @@ router.register(r'recorridas', views.RecorridaViewSet)
 router.register(r'rotacion', views.RotacionViewSet)
 router.register(r'contratistas', views.ContratistasViewSet)
 router.register(r'sanitacion', views.SanitacionViewSet)
+router.register(r'capataz', views.CapatazViewSet)
 router.register(r'opcionsanitacion', views.opcionSanitacionViewSet)
 
 schema_view = get_schema_view(

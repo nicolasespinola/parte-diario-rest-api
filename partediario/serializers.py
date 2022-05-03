@@ -33,6 +33,12 @@ class LluviaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class CapatazSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Capataz
+        fields = '__all__'
+
+
 class EntradaWriteSerializer(serializers.ModelSerializer):
     cat_e = serializers.CharField(write_only=True)
     tip_e = serializers.CharField(write_only=True)

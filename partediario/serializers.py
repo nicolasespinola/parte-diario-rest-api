@@ -33,6 +33,11 @@ class LluviaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class dateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = date
+        fields = '__all__'
+
 class CapatazSerializer(serializers.ModelSerializer):
     class Meta:
         model = Capataz

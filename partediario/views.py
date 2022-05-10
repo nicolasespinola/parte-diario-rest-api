@@ -25,6 +25,10 @@ class CategoriaViewSet(viewsets.ModelViewSet):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
 
+class dateViewSet(viewsets.ModelViewSet):
+    queryset = date.objects.all()
+    serializer_class = dateSerializer
+
 
 class LluviaViewSet(viewsets.ModelViewSet):
     queryset = lluvia.objects.all()

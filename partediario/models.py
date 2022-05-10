@@ -184,6 +184,9 @@ class rotacion(models.Model):
     class Meta:
         verbose_name_plural = "Rotaciones"
 
+class date(models.Model):
+    fecha = models.DateField(auto_now_add=True)
+    
 
 class recorrida(models.Model):
     potrero = models.CharField(max_length=50)

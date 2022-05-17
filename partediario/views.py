@@ -74,8 +74,12 @@ class TipoSalidaViewSet(viewsets.ModelViewSet):
 
 class RecategorizacionViewSet(viewsets.ModelViewSet):
     queryset = recategorizacion.objects.all()
-    serializer_class = RecategorizacionSerializer
+    serializer_class = recategorizacionReadSerializer
 
+    def get_serializer_class(self):
+        if (self.action == 'create'):
+            return(recategorizacionWriteSerializer)
+        return(self.serializer_class)
 
 class RecorridaViewSet(viewsets.ModelViewSet):
     queryset = recorrida.objects.all()
@@ -88,7 +92,12 @@ class SanitacionViewSet(viewsets.ModelViewSet):
 
 class otraViewSet(viewsets.ModelViewSet):
     queryset = otraActividad.objects.all()
-    serializer_class = otraSerializer
+    serializer_class = otraReadSerializer
+
+    def get_serializer_class(self):
+        if (self.action == 'create'):
+            return(otraWriteSerializer)
+        return(self.serializer_class)
 
 class RotacionViewSet(viewsets.ModelViewSet):
     queryset = rotacion.objects.all()

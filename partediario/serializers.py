@@ -95,7 +95,7 @@ class otraWriteSerializer(serializers.ModelSerializer):
     tip_a = serializers.CharField(write_only=True)
 
     class Meta:
-        model = salida
+        model = otraActividad
         exclude = ("categoria", "actividad")
 
     def create(self, validated_data):
@@ -104,7 +104,7 @@ class otraWriteSerializer(serializers.ModelSerializer):
         cat = Categoria.objects.get(categoria=cat_a)
         tip = opcionActividad.objects.get(nombre=tip_a)
         act = otraActividad.objects.create(
-            **validated_data, categoria=cat, salidas=tip)
+            **validated_data, categoria=cat, actividad=tip)
         return(act)
 
 class otraReadSerializer(serializers.ModelSerializer):
@@ -125,10 +125,28 @@ class TipoSalidaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class RecategorizacionSerializer(serializers.ModelSerializer):
+class recategorizacionWriteSerializer(serializers.ModelSerializer):
+    cat_a = serializers.CharField(write_only=True)
+    cat_b = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = recategorizacion
+        exclude = ("categoria_inicial", "categotia_final")
+
+    def create(self, validated_data):
+        cat_a = validated_data.pop("cat_a")
+        cat_b = validated_data.pop("cat_b")
+        cata = Categoria.objects.get(categoria=cat_a)
+        catb = Categoria.objects.get(categoria=cat_b)
+        act = recategorizacion.objects.create(
+            **validated_data, categoria_inicial=cata, categoria_final=catb)
+        return(act)
+
+class recategorizacionReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = recategorizacion
         fields = '__all__'
+
 
 
 class RecorridoSerializer(serializers.ModelSerializer):

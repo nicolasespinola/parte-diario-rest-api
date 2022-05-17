@@ -131,7 +131,7 @@ class recategorizacionWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = recategorizacion
-        exclude = ("categoria_inicial", "categotia_final")
+        exclude = ("categoria_inicial", "categoria_final") 
 
     def create(self, validated_data):
         cat_a = validated_data.pop("cat_a")

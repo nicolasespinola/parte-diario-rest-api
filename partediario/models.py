@@ -86,13 +86,13 @@ class parteDiario(models.Model):
         verbose_name=("Recorridas"),
     )
 
-    opcionSanitacion = models.ForeignKey(
-        "partediario.opcionSanitacion",
+    otra_actividad = models.ForeignKey(
+        "partediario.otraActividad",
         models.SET_NULL,
         "partediario",
         null=True,
         blank=True,
-        verbose_name=("Opcion de Sanitacion"),
+        verbose_name=("OtraotraActividad"),
     )
 
     def __str__(self):
@@ -237,9 +237,6 @@ class otraActividad(models.Model):
         opcionActividad, models.CASCADE, "opciones", verbose_name=("Opciones")
     )
     cantidad = models.IntegerField(null=True, blank=True)
-    parteDiario = models.ForeignKey(
-        parteDiario, models.CASCADE, "Otra", verbose_name=("Otros")
-    )
 
 
 class sanitacion(models.Model):

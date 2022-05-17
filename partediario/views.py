@@ -86,6 +86,9 @@ class SanitacionViewSet(viewsets.ModelViewSet):
     queryset = sanitacion.objects.all()
     serializer_class = SanitacionSerializer
 
+class otraViewSet(viewsets.ModelViewSet):
+    queryset = otraActividad.objects.all()
+    serializer_class = otraSerializer
 
 class RotacionViewSet(viewsets.ModelViewSet):
     queryset = rotacion.objects.all()

@@ -90,6 +90,11 @@ class SalidaReadSerializer(serializers.ModelSerializer):
         model = salida
         fields = '__all__'
 
+class otraSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = otraActividad
+        fields = '__all__'
+
 class TipoEntradaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Entradas

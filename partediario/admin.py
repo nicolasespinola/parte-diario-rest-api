@@ -78,11 +78,6 @@ class pesajeInLine(admin.TabularInline):
     extra = 0
 
 
-class otroInLine(admin.TabularInline):
-    model = otraActividad
-    fields = ["categoria", "cantidad", "actividad"]
-    extra = 0
-
 
 class contratistaInLine(admin.TabularInline):
     model = contratistas
@@ -93,7 +88,6 @@ class contratistaInLine(admin.TabularInline):
 @admin.register(parteDiario)
 class parteDiarioAdmin(admin.ModelAdmin):
     list_display = ["id", "empresa", "fecha", "lluvia"]
-    inlines = [otroInLine]
 
 
 class CapatazInline(admin.StackedInline):

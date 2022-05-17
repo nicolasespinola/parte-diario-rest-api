@@ -68,11 +68,27 @@ class EntradaReadSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class SalidaSerializer(serializers.ModelSerializer):
+class SalidaWriteSerializer(serializers.ModelSerializer):
+    cat_e = serializers.CharField(write_only=True)
+    tip_e = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = salida
+        exclude = ("categoria", "salidas")
+
+    def create(self, validated_data):
+        cat_e = validated_data.pop("cat_e")
+        tip_e = validated_data.pop("tip_e")
+        cat = Categoria.objects.get(categoria=cat_e)
+        tip = Salidas.objects.get(salida=tip_e)
+        ent = entrada.objects.create(
+            **validated_data, categoria=cat, salidas=tip)
+        return(ent)
+
+class SalidaReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = salida
         fields = '__all__'
-
 
 class TipoEntradaSerializer(serializers.ModelSerializer):
     class Meta:

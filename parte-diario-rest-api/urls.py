@@ -7,6 +7,7 @@ from drf_yasg import openapi
 from rest_framework import routers
 from partediario import views
 
+
 router = routers.DefaultRouter()
 router.register(r'empresas', views.EmpresaViewSet)
 router.register(r'partediarios', views.ParteDiarioViewSet)
@@ -25,6 +26,7 @@ router.register(r'sanitacion', views.SanitacionViewSet)
 router.register(r'capataz', views.CapatazViewSet)
 router.register(r'date', views.dateViewSet)
 router.register(r'opcionsanitacion', views.opcionSanitacionViewSet)
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -48,6 +50,7 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     path('', include(router.urls)),
+    path('parteDiarioEmpresas/<int:id>/', views.ParteDiarioEmpresasViewSet.as_view())
 ]
 
 if settings.DEBUG:

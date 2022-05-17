@@ -159,15 +159,12 @@ class lluvia(models.Model):
         "Cant. de mm's de lluvia en el Retiro:")
     evento = models.CharField("Otro evento:", max_length=50)
 
-
-def __str__(self):
-    return '{} {} {}'.format('Lluvia de', self.mm_central, 'mms')
+    def __str__(self):
+        return '{} {} {}'.format('Lluvia de', self.mm_central, 'mms')
 
 
 class entrada(models.Model):
     cantidad = models.IntegerField(null=True, blank=True)
-    cantidad_m = models.IntegerField(null=True, blank=True)
-    cantidad_h = models.IntegerField(null=True, blank=True)
     peso_total = models.IntegerField(null=True, blank=True)
     categoria = models.ForeignKey(
         Categoria, models.CASCADE, related_name="categorias_entrada", verbose_name=("Categorias")

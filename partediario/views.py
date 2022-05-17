@@ -4,6 +4,8 @@ from rest_framework import viewsets
 from .serializers import *
 from .models import *
 from partediario import serializers
+import csv
+from rest_framework.views import APIView
 
 
 class EmpresaViewSet(viewsets.ModelViewSet):
@@ -51,8 +53,13 @@ class EntradaViewSet(viewsets.ModelViewSet):
 
 
 class SalidaViewSet(viewsets.ModelViewSet):
-    queryset = salida.objects.all()
-    serializer_class = SalidaSerializer
+    queryset = entrada.objects.all()
+    serializer_class = SalidaReadSerializer
+
+    def get_serializer_class(self):
+        if (self.action == 'create'):
+            return(SalidaWriteSerializer)
+        return(self.serializer_class)
 
 
 class TipoEntradaViewSet(viewsets.ModelViewSet):
@@ -93,3 +100,10 @@ class ContratistasViewSet(viewsets.ModelViewSet):
 class opcionSanitacionViewSet(viewsets.ModelViewSet):
     queryset = opcionSanitacion.objects.all()
     serializer_class = OpcionSantiacionSerializer
+
+
+class ParteDiarioEmpresasViewSet(APIView):
+    def get(self,request,id):
+        partesDiario = parteDiario.objects.filter(empresa=id)  
+        
+

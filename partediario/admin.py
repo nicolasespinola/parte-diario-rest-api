@@ -33,7 +33,7 @@ admin.site.register(contratistas)
 admin.site.register(opcionSanitacion)
 admin.site.register(opcionActividad)
 admin.site.register(lluvia)
-
+admin.site.register(Palpacion)
 
 class entradaInLine(admin.TabularInline):
     model = entrada

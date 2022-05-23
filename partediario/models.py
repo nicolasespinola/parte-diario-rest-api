@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class parteDiario(models.Model):
-    fecha = models.DateField(auto_now_add=True)
+    fecha = models.DateField()
 
     empresa = models.ForeignKey(
         "partediario.Empresa",
@@ -84,6 +84,15 @@ class parteDiario(models.Model):
         null=True,
         blank=True,
         verbose_name=("Recorridas"),
+    )
+
+    palpacion = models.ForeignKey(
+        "partediario.Palpacion",
+        models.SET_NULL,
+        "partediario",
+        null=True,
+        blank=True,
+        verbose_name=("Palpacion"),
     )
 
     otra_actividad = models.ForeignKey(
@@ -268,6 +277,32 @@ class recategorizacion(models.Model):
     def __str__(self):
         return '{}'.format(self.categoria_inicial)
 
+class Palpacion(models.Model):
+    categoria = models.ForeignKey(
+        Categoria, models.CASCADE, "categoriaPalp", verbose_name=("Categoria Palpacion")
+    )
+
+    cantidad_prenadas = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Palpacion"
+
+    def __str__(self):
+        return '{}'.format(self.categoria)
+
+class Maquinarias(models.Model):
+    tractor = models.CharField(max_length=50, null=True)
+    insumo = models.CharField(max_length=50, null=True)
+    maquinaria = models.CharField(max_length=50, null=True)
+    causa = models.CharField(max_length=50, null=True)
+    hora_inicial = models.IntegerField(null=True, blank=True)
+    hora_final = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Palpacion"
+
+    def __str__(self):
+        return '{}'.format(self.categoria)
 
 class Inventario(models.Model):
     categoria = models.ForeignKey(

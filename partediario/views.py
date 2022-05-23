@@ -81,10 +81,22 @@ class RecategorizacionViewSet(viewsets.ModelViewSet):
             return(recategorizacionWriteSerializer)
         return(self.serializer_class)
 
+class PalpacionViewSet(viewsets.ModelViewSet):
+    queryset = Palpacion.objects.all()
+    serializer_class = PalpacionReadSerializer
+
+    def get_serializer_class(self):
+        if (self.action == 'create'):
+            return(PalpacionWriteSerializer)
+        return(self.serializer_class)
+
 class RecorridaViewSet(viewsets.ModelViewSet):
     queryset = recorrida.objects.all()
     serializer_class = RecorridoSerializer
 
+class MaquinariasViewSet(viewsets.ModelViewSet):
+    queryset = Maquinarias.objects.all()
+    serializer_class = MaquinariasSerializer
 
 class SanitacionViewSet(viewsets.ModelViewSet):
     queryset = sanitacion.objects.all()

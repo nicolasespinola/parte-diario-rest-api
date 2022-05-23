@@ -1,7 +1,7 @@
 from dataclasses import field, fields
 from rest_framework import serializers
 from partediario.models import *
-
+from datetime import datetime
 
 class EmpresaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,9 +10,17 @@ class EmpresaSerializer(serializers.ModelSerializer):
 
 
 class parteDiarioSerializer(serializers.ModelSerializer):
+
+    fecha = serializers.DateField(required=False)
     class Meta:
         model = parteDiario
         fields = '__all__'
+
+    def create(self, validated_data):
+        today = datetime.today().date()
+        partediario = parteDiario.objects.create(**validated_data,fecha=today)
+        return partediario
+
 
 
 class InventarioSerializer(serializers.ModelSerializer):
@@ -176,4 +184,29 @@ class ContratistasSerializer(serializers.ModelSerializer):
 class OpcionSantiacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = opcionSanitacion
+        fields = '__all__'
+
+class PalpacionWriteSerializer(serializers.ModelSerializer):
+    cat_e = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = Palpacion
+        exclude = ("categoria",)
+
+    def create(self, validated_data):
+        cat_e = validated_data.pop("cat_e")
+        cat = Categoria.objects.get(categoria=cat_e)
+        ent = Palpacion.objects.create(
+            **validated_data, categoria=cat)
+        return(ent)
+
+
+class PalpacionReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Palpacion
+        fields = '__all__'
+
+class MaquinariasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Maquinarias
         fields = '__all__'

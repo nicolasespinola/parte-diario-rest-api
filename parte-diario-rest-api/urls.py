@@ -26,8 +26,9 @@ router.register(r'sanitacion', views.SanitacionViewSet)
 router.register(r'capataz', views.CapatazViewSet)
 router.register(r'date', views.dateViewSet)
 router.register(r'otra', views.otraViewSet)
+router.register(r'palpacion', views.PalpacionViewSet)
 router.register(r'opcionsanitacion', views.opcionSanitacionViewSet)
-
+router.register(r'maquinarias', views.MaquinariasViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(

@@ -206,6 +206,7 @@ def __str__(self):
 class salida(models.Model):
     cantidad = models.IntegerField(null=True, blank=True)
     causa = models.CharField(max_length=50)
+    pesoTotal = models.IntegerField(null=True, blank=True)
     categoria = models.ForeignKey(
         Categoria, on_delete=models.CASCADE, related_name="categorias_salida", verbose_name=("Categorias")
     )

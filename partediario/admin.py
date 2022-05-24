@@ -12,10 +12,6 @@ class EmpresaAdmin(admin.ModelAdmin):
     filter_horizontal = ["Inventario_de_Empresa"]
 
 
-@admin.register(Superficie)
-class SuperficieAdmin(admin.ModelAdmin):
-    list_display = ["id", "empresa", "has_totales", "has_utiles", "actividad"]
-    autocomplete_fields = ["empresa"]
 
 
 admin.site.register(Categoria)
@@ -33,7 +29,7 @@ admin.site.register(contratistas)
 admin.site.register(opcionSanitacion)
 admin.site.register(opcionActividad)
 admin.site.register(lluvia)
-admin.site.register(Palpacion)
+
 
 class entradaInLine(admin.TabularInline):
     model = entrada

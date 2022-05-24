@@ -329,25 +329,12 @@ class Empresa(models.Model):
     Inventario_de_Empresa = models.ManyToManyField(
         to=Inventario, blank=True)
     potreros = models.IntegerField(blank=True, null=True)
-
+    has_utiles = models.IntegerField(blank=True, null=True)
+    has_utiles = models.IntegerField(blank=True, null=True)
     def __str__(self):
         return '{}'.format(self.empresa)
 
 
-class Superficie(models.Model):
-    has_totales = models.CharField(max_length=50)
-    has_utiles = models.CharField(max_length=50)
-    actividad = models.CharField(max_length=50)
-    empresa = models.ForeignKey(
-        "partediario.Empresa",
-        models.SET_NULL,
-        "superficies",
-        null=True,
-        verbose_name=("Empresa"),
-    )
-
-    def __str__(self):
-        return '{} {} {}'.format('Superficie ', self.has_totales, ' has')
 
 
 class contratistas(models.Model):

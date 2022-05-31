@@ -103,9 +103,7 @@ class EntradaReadSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class InventarioWriteSerializer(serializers.ModelSerializer):
-    
     cat_e = serializers.CharField(write_only=True)
-
     class Meta:
         model = Inventario
         exclude = ("categoria",)
@@ -113,6 +111,7 @@ class InventarioWriteSerializer(serializers.ModelSerializer):
             cat_e = validated_data.pop("cat_e")
             cat = Categoria.objects.get(categoria=cat_e)
             inv = Inventario.objects.create(**validated_data, categoria=cat)
+        return(inv)
 
 class InventarioReadSerializer(serializers.ModelSerializer):
     class Meta:

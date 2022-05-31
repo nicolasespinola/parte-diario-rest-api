@@ -102,11 +102,23 @@ class EntradaReadSerializer(serializers.ModelSerializer):
         model = entrada
         fields = '__all__'
 
-class InventarioSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=False)
+class InventarioWriteSerializer(serializers.ModelSerializer):
+    
+    cat_e = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = Inventario
+        exclude = ("categoria")
+        def create(self, validated_data):
+            cat_e = validated_data.pop("cat_e")
+            cat = Categoria.objects.get(categoria=cat_e)
+            inv = Inventario.objects.create(**validated_data, categoria=cat)
+
+class InventarioReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inventario
         fields = '__all__'
+
 
 class SalidaWriteSerializer(serializers.ModelSerializer):
     cat_e = serializers.CharField(write_only=True)

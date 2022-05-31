@@ -22,6 +22,10 @@ class InventarioViewSet(viewsets.ModelViewSet):
     queryset = Inventario.objects.all()
     serializer_class = InventarioSerializer
 
+    def get_serializer_class(self):
+        if (self.action == 'create'):
+            return(InventarioWriteSerializer)
+        return(self.serializer_class)
 
 class CategoriaViewSet(viewsets.ModelViewSet):
     queryset = Categoria.objects.all()

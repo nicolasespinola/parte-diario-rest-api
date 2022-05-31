@@ -108,7 +108,7 @@ class InventarioWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Inventario
-        exclude = ("categoria")
+        exclude = ("categoria",)
         def create(self, validated_data):
             cat_e = validated_data.pop("cat_e")
             cat = Categoria.objects.get(categoria=cat_e)

@@ -8,6 +8,34 @@ class EmpresaSerializer(serializers.ModelSerializer):
         model = Empresa
         fields = '__all__'
 
+    def create_or_update_items(self, items):
+        inventarios_ids=[]
+        for item in items:
+            if(item.id):
+                for field in item.__dict__:
+                    try:
+                        setattr(item, field, item.__dict__[field])
+                    except KeyError:
+                        pass
+                item.save()
+                inventarios_ids.append(item.pk)
+        return(inventarios_ids[0])
+
+    def update(self,instance,validated_data):
+        print(validated_data)
+        inventarios=validated_data.pop('inventarios',[])
+        empresa = self.create_or_update_items(inventarios)
+        instance.inventarios.add(empresa)
+        for field in validated_data:
+            try:
+                setattr(instance, field, validated_data[field])
+            except KeyError:
+                pass
+        instance.save()
+        return instance
+        
+        
+
 
 class parteDiarioSerializer(serializers.ModelSerializer):
 
@@ -20,13 +48,6 @@ class parteDiarioSerializer(serializers.ModelSerializer):
         today = datetime.today().date()
         partediario = parteDiario.objects.create(**validated_data,fecha=today)
         return partediario
-
-
-
-class InventarioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Inventario
-        fields = '__all__'
 
 
 class CategoriaSerializer(serializers.ModelSerializer):
@@ -55,7 +76,6 @@ class CapatazSerializer(serializers.ModelSerializer):
 class EntradaWriteSerializer(serializers.ModelSerializer):
     cat_e = serializers.CharField(write_only=True)
     tip_e = serializers.CharField(write_only=True)
-
     class Meta:
         model = entrada
         exclude = ("categoria", "entradas")
@@ -65,16 +85,28 @@ class EntradaWriteSerializer(serializers.ModelSerializer):
         tip_e = validated_data.pop("tip_e")
         cat = Categoria.objects.get(categoria=cat_e)
         tip = Entradas.objects.get(tipo=tip_e)
+        opcionPeso=validated_data.get("opcion_peso")
+        peso=validated_data.pop("peso_total")
+        cantidad=validated_data.get("cantidad")
+        print(validated_data)
+        if (opcionPeso==1):
+            peso=peso*cantidad
+        else:
+            peso=peso
         ent = entrada.objects.create(
-            **validated_data, categoria=cat, entradas=tip)
+            **validated_data, categoria=cat, entradas=tip,peso_total=peso)
         return(ent)
-
 
 class EntradaReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = entrada
         fields = '__all__'
 
+class InventarioSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
+    class Meta:
+        model = Inventario
+        fields = '__all__'
 
 class SalidaWriteSerializer(serializers.ModelSerializer):
     cat_e = serializers.CharField(write_only=True)
@@ -89,6 +121,13 @@ class SalidaWriteSerializer(serializers.ModelSerializer):
         tip_e = validated_data.pop("tip_e")
         cat = Categoria.objects.get(categoria=cat_e)
         tip = Salidas.objects.get(salida=tip_e)
+        opcionPeso=validated_data.pop("opcionPeso")
+        peso=validated_data.pop("peso_total")
+        cantidad=validated_data.pop("cantidad")
+        if (opcionPeso==1):
+            peso=peso*cantidad
+        else:
+            peso=peso
         sal = salida.objects.create(
             **validated_data, categoria=cat, salidas=tip)
         return(sal)
@@ -186,6 +225,13 @@ class OpcionSantiacionSerializer(serializers.ModelSerializer):
         model = opcionSanitacion
         fields = '__all__'
 
+
+class desteteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = destete
+        fields = '__all__'
+
+
 class PalpacionWriteSerializer(serializers.ModelSerializer):
     cat_e = serializers.CharField(write_only=True)
 
@@ -199,7 +245,6 @@ class PalpacionWriteSerializer(serializers.ModelSerializer):
         ent = Palpacion.objects.create(
             **validated_data, categoria=cat)
         return(ent)
-
 
 class PalpacionReadSerializer(serializers.ModelSerializer):
     class Meta:

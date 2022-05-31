@@ -41,6 +41,9 @@ class CapatazViewSet(viewsets.ModelViewSet):
     queryset = Capataz.objects.all()
     serializer_class = CapatazSerializer
 
+class desteteViewSet(viewsets.ModelViewSet):
+    queryset = destete.objects.all()
+    serializer_class = desteteSerializer
 
 class EntradaViewSet(viewsets.ModelViewSet):
     queryset = entrada.objects.all()
@@ -53,7 +56,7 @@ class EntradaViewSet(viewsets.ModelViewSet):
 
 
 class SalidaViewSet(viewsets.ModelViewSet):
-    queryset = entrada.objects.all()
+    queryset = salida.objects.all()
     serializer_class = SalidaReadSerializer
 
     def get_serializer_class(self):

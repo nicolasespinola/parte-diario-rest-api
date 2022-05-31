@@ -175,6 +175,7 @@ class lluvia(models.Model):
 class entrada(models.Model):
     cantidad = models.IntegerField(null=True, blank=True)
     peso_total = models.IntegerField(null=True, blank=True)
+    opcion_peso = models.IntegerField(null=True, blank=True)
     categoria = models.ForeignKey(
         Categoria, models.CASCADE, related_name="categorias_entrada", verbose_name=("Categorias")
     )
@@ -206,6 +207,7 @@ def __str__(self):
 class salida(models.Model):
     cantidad = models.IntegerField(null=True, blank=True)
     causa = models.CharField(max_length=50)
+    opcionPeso = models.IntegerField(null=True, blank=True)
     pesoTotal = models.IntegerField(null=True, blank=True)
     categoria = models.ForeignKey(
         Categoria, on_delete=models.CASCADE, related_name="categorias_salida", verbose_name=("Categorias")
@@ -225,7 +227,15 @@ class pesaje(models.Model):
     parteDiario = models.ForeignKey(
         parteDiario, models.CASCADE, "pesaje", verbose_name=("Pesajes")
     )
+    def __str__(self):
+        return '{}'.format(self.categoria)
 
+class destete(models.Model):
+    cantidad = models.IntegerField(null=True, blank=True)
+    pesoTotal = models.IntegerField(null=True, blank=True)
+    parteDiario = models.ForeignKey(
+        parteDiario, models.CASCADE, "destete", verbose_name=("Destetes")
+    )
 
 class opcionActividad(models.Model):
 
@@ -327,7 +337,7 @@ class Empresa(models.Model):
     representante = models.CharField(max_length=50)
     empresa = models.CharField(max_length=50)
     ruc_empresa = models.CharField(max_length=50, default='0')
-    Inventario_de_Empresa = models.ManyToManyField(
+    inventarios = models.ManyToManyField(
         to=Inventario, blank=True)
     potreros = models.IntegerField(blank=True, null=True)
     has_utiles = models.IntegerField(blank=True, null=True)

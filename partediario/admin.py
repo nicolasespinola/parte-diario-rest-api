@@ -7,9 +7,9 @@ from django.contrib.auth.admin import UserAdmin
 class EmpresaAdmin(admin.ModelAdmin):
     list_display = ["id", "representante", "empresa"]
     list_display_links = ["id", "representante"]
-    list_filter = ["Inventario_de_Empresa"]
+    list_filter = ["inventarios"]
     search_fields = ["categoria"]
-    filter_horizontal = ["Inventario_de_Empresa"]
+    filter_horizontal = ["inventarios"]
 
 
 

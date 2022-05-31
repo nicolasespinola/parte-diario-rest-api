@@ -20,7 +20,7 @@ class ParteDiarioViewSet(viewsets.ModelViewSet):
 
 class InventarioViewSet(viewsets.ModelViewSet):
     queryset = Inventario.objects.all()
-    serializer_class = InventarioSerializer
+    serializer_class = InventarioReadSerializer
 
     def get_serializer_class(self):
         if (self.action == 'create'):
